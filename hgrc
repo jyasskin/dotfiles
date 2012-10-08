@@ -1,0 +1,7 @@
+[ui]
+username = Jeffrey Yasskin <jyasskin@gmail.com>
+
+[extensions]
+hgext.bookmarks =
+hgext.git =
+purge =
