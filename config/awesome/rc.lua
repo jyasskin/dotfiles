@@ -7,6 +7,11 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- Widgets
+require("obvious.battery")
+require("obvious.cpu")
+require("obvious.volume_alsa")
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -40,7 +45,7 @@ end
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
+terminal = "xterm -name quick-term"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -54,7 +59,6 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -65,7 +69,8 @@ layouts =
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+    awful.layout.suit.magnifier,
+    awful.layout.suit.floating,
 }
 -- }}}
 
@@ -74,7 +79,8 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ "mix", "chrome", "emacs", "term", "music", 6, 7, 8, 9 }, s,
+                        layouts[1])
 end
 -- }}}
 
@@ -89,7 +95,9 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
+                                    { "open terminal", terminal },
+                                    { "Google Chrome", "/opt/google/chrome/google-chrome", "/opt/google/chrome/product_logo_32.xpm"},
+                                    { "Ubuntu Software Center", "/usr/bin/software-center" },
                                   }
                         })
 
@@ -99,10 +107,13 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+clock_ctl = awful.widget.textclock()
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
+
+-- Volume control
+volume_ctl = obvious.volume_alsa()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -179,7 +190,9 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        mytextclock,
+        clock_ctl,
+        volume_ctl,
+        obvious.battery(),
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -252,7 +265,14 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+    -- Sound
+    awful.key({}, "XF86AudioRaiseVolume", function() volume_ctl.raise(volume_ctl, 10) end),
+    awful.key({}, "XF86AudioLowerVolume", function() volume_ctl.lower(volume_ctl, 10) end),
+    awful.key({"Shift"}, "XF86AudioRaiseVolume", function() volume_ctl.raise(volume_ctl, 1) end),
+    awful.key({"Shift"}, "XF86AudioLowerVolume", function() volume_ctl.lower(volume_ctl, 1) end),
+    awful.key({}, "XF86AudioMute", function() volume_ctl.mute(volume_ctl) end)
 )
 
 clientkeys = awful.util.table.join(
@@ -331,17 +351,21 @@ awful.rules.rules = {
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = true,
+                     floating = false,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
+    { rule_any = { class = {"MPlayer", "pinentry", "Gimp", "Display"} },
       properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+    { rule = { class = "Google-chrome" },
+      properties = { tag = tags[1][2] } },
+    { rule = { class = "Emacs" },
+      properties = { tag = tags[1][3] } },
+    { rule = { class = "XTerm" },
+      except = { instance = "quick-term" },
+      properties = { tag = tags[1][4] } },
+    { rule = { class = "Spotify" },
+      properties = { tag = tags[1][5] } },
 }
 -- }}}
 
