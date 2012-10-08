@@ -1,0 +1,28 @@
+*customization:	-color
+
+Xft.dpi:	96
+Xft.antialias:	1
+Xft.hinting:	1
+Xft.hintstyle:	hintslight
+Xft.rgba:	rgb
+Xft.lcdfilter:	lcddefault
+
+XTerm*allowTcapOps: true
+XTerm*allowWindowOps: true
+XTerm*disallowedWindowOps: 20,21,SetXprop
+XTerm*faceName: mono
+XTerm*faceSize: 10.0
+XTerm*maximized: true
+XTerm*renderFont: true
+XTerm*termName: xterm-256color
+XTerm*utf8Title: true
+XTerm*visualBell: true
+
+! Make alt work correctly.  With xterm v277, eightBitMeta may replace this.
+XTerm*eightBitInput: false
+
+! Map Ctrl-apostrophe to F20 to let tmux use it as the prefix key.  I
+! found the actual sequence by trial-and-error.
+*VT100*translations:    #override \n\
+        Ctrl<Key>apostrophe: string("\033[34;1~")\n
+
