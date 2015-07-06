@@ -356,7 +356,7 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule_any = { class = {"MPlayer", "pinentry", "Gimp", "Display"} },
       properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
+    -- Put apps on particular tags.
     { rule = { class = "Google-chrome" },
       properties = { tag = tags[1][2] } },
     { rule = { class = "Emacs" },
@@ -399,3 +399,7 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+
+-- Startup programs
+awful.util.spawn('xscreensaver -no-splash &')

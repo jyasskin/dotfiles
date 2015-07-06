@@ -52,42 +52,70 @@
 
 (setq c-offsets-alist '((innamespace . 0)))
 
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+
+(global-set-key (kbd "C-m") 'newline-and-indent)
+
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Info-additional-directory-list (quote ("/opt/local/share/info")))
  '(backup-directory-alist (quote (("." . "/Users/jyasskin/tmp/backup"))))
  '(c-auto-align-backslashes nil)
  '(c-basic-offset 2)
- '(c-default-style (quote ((c++-mode . "stroustrup") (java-mode . "java") (awk-mode . "awk") (other . "gnu"))))
+ '(c-default-style
+   (quote
+    ((c++-mode . "stroustrup")
+     (java-mode . "java")
+     (awk-mode . "awk")
+     (other . "gnu"))))
  '(column-number-mode t)
- '(exec-path (quote ("/opt/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/MacPorts/Emacs.app/Contents/MacOS/bin")))
+ '(exec-path
+   (quote
+    ("/opt/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/MacPorts/Emacs.app/Contents/MacOS/bin")))
  '(grep-command "/usr/bin/ack-grep -a --nocolor --nogroup --match ")
  '(grep-find-command nil)
- '(grep-find-template "find . <X> -type f <F> -exec grep <C> -n -e <R> {} /dev/null \\;")
+ '(grep-find-template
+   "find . <X> -type f <F> -exec grep <C> -n -e <R> {} /dev/null \\;")
  '(grep-highlight-matches t)
  '(grep-template "grep <C> -n -e <R> <F>")
  '(grep-use-null-device t)
  '(indent-tabs-mode nil)
- '(ispell-program-name "/opt/local/bin/aspell" t)
+ '(ispell-program-name "/opt/local/bin/aspell")
+ '(js2-strict-trailing-comma-warning nil)
  '(mouse-wheel-mode t)
  '(ns-alternate-modifier (quote none))
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.org/packages/"))))
  '(paren-match-face (quote paren-face-match-light))
  '(paren-sexp-mode t)
  '(partial-completion-mode t)
  '(python-indent 2)
- '(rng-schema-locating-files (quote ("schemas.xml" "~/.emacs.d/html5-el/schemas.xml" "/Applications/MacPorts/Emacs.app/Contents/Resources/etc/schema/schemas.xml")))
+ '(rng-schema-locating-files
+   (quote
+    ("schemas.xml" "~/.emacs.d/html5-el/schemas.xml" "/Applications/MacPorts/Emacs.app/Contents/Resources/etc/schema/schemas.xml")))
  '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8-unix))))
  '(show-trailing-whitespace t)
  '(transient-mark-mode t)
- '(truncate-partial-width-windows nil))
+ '(truncate-partial-width-windows nil)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-css-indent-offset 2)
+ '(web-mode-enable-current-column-highlight t)
+ '(web-mode-enable-current-element-highlight t)
+ '(web-mode-markup-indent-offset 2))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(web-mode-current-column-highlight-face ((t (:background "light gray"))))
+ '(web-mode-current-element-highlight-face ((t (:background "white smoke"))))
+ '(web-mode-html-attr-name-face ((t (:foreground "dark red"))))
+ '(web-mode-html-tag-face ((t (:foreground "navy")))))

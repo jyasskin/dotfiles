@@ -15,6 +15,7 @@ XTerm*faceSize: 10.0
 XTerm*maximized: true
 XTerm*renderFont: true
 XTerm*termName: xterm-256color
+XTerm*titeInhibit: true
 XTerm*utf8Title: true
 XTerm*visualBell: true
 
