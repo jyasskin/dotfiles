@@ -5,5 +5,3 @@
 	ui = auto
 [branch]
 	autosetupmerge = always
-[push]
-	default = simple
