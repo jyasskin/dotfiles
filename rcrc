@@ -1,0 +1,4 @@
+DOTFILES_DIRS="~/.dotfiles ~/dotfiles"
+EXCLUDES="install.sh"
+SYMLINK_DIRS="opt/depot_tools"
+UNDOTTED="bin opt"

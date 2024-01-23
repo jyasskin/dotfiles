@@ -1,0 +1,4 @@
+#! /bin/dash
+git map-branches -v
+git status
+
